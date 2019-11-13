@@ -1,0 +1,68 @@
+<form nz-form #Form="ngForm">
+    <nz-form-item>
+        <nz-form-label [nzSpan]="2">标题</nz-form-label>
+        <nz-form-control [nzSpan]="12" nzErrorTip="标题是必填项！">
+            <input nz-input [(ngModel)]="imgObj.title" name="title" required maxlength="15" placeholder="请输入标题！" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSpan]="2">类型</nz-form-label>
+        <nz-form-control [nzSpan]="12" nzValidateStatus="validating">
+            <nz-select name="type" [(ngModel)]="imgObj.type">
+                <nz-option nzValue="0" nzLabel="首页banner"></nz-option>
+                <nz-option nzValue="1" nzLabel="找职位banner"></nz-option>
+                <nz-option nzValue="2" nzLabel="找精英banner"></nz-option>
+                <nz-option nzValue="3" nzLabel="行业大图"></nz-option>
+            </nz-select>
+            <nz-select name="industry" [(ngModel)]="imgObj.industry" *ngIf="imgObj.type == 3">
+                <nz-option nzValue="0" nzLabel="移动互联网"></nz-option>
+                <nz-option nzValue="1" nzLabel="电子商务"></nz-option>
+                <nz-option nzValue="2" nzLabel="企业服务"></nz-option>
+                <nz-option nzValue="3" nzLabel="O2O"></nz-option>
+                <nz-option nzValue="4" nzLabel="教育"></nz-option>
+                <nz-option nzValue="5" nzLabel="金融"></nz-option>
+                <nz-option nzValue="6" nzLabel="游戏"></nz-option>
+            </nz-select>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSpan]="2">说明</nz-form-label>
+        <nz-form-control [nzSpan]="12" nzErrorTip="必填项，最多输入30个字符！">
+            <input nz-input [(ngModel)]="imgObj.content" name="content" required maxlength="30"
+                placeholder="请输入说明文字！" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSpan]="2">链接</nz-form-label>
+        <nz-form-control [nzSpan]="12" nzErrorTip="必填项，最少输入10个字符！">
+            <input nz-input [(ngModel)]="imgObj.url" name="url" required minlength="10" placeholder="请输入链接地址！" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSpan]="2">配图</nz-form-label>
+        <nz-form-control [nzSpan]="12">
+            <div class="clearfix">
+                <nz-upload nzAction="/a/u/img/task" nzListType="picture-card" [(nzFileList)]="fileList"
+                    [nzPreview]="handlePreview" (nzChange)='change($event)' [nzShowButton]="fileList.length < 1">
+                    <i nz-icon nzType="plus"></i>
+                    <div class="ant-upload-text">Upload</div>
+                </nz-upload>
+                <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null"
+                    (nzOnCancel)="previewVisible = false">
+                    <ng-template #modalContent>
+                        <img [src]="previewImage" [ngStyle]="{ width: '100%' }" />
+                    </ng-template>
+                </nz-modal>
+            </div>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item class="lastItem">
+        <nz-form-control [nzOffset]="2" class="submit">
+            <button nz-button nzType="primary" (click)="online()"
+                [disabled]="(!Form.form.valid || imgObj.img == undefined) || onlBtn ">立即上线</button>
+            <button nz-button nzType="primary" (click)="draft()"
+                [disabled]="(!Form.form.valid || imgObj.img == undefined) || offBtn  ">存为草稿</button>
+        </nz-form-control>
+        <button nz-button nzType="danger" class="cancel" (click)="goback()">取消</button>
+    </nz-form-item>
+</form>

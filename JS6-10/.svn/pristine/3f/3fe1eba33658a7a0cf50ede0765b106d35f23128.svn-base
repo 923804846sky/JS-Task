@@ -1,0 +1,52 @@
+import {
+    Component,
+    OnInit
+} from '@angular/core';
+import {
+    UploadFile
+} from 'ng-zorro-antd';
+
+import {
+    ServiceService
+} from '../../../services/service.service'
+
+@Component({
+    selector: 'app-detail',
+    templateUrl: './detail.component.html',
+    styleUrls: ['./detail.component.scss']
+})
+export class DetailComponent implements OnInit {
+
+    public imgObj:any = {
+        title:'',
+        type:'',
+        status:'',
+        img:[],
+        content:'',
+        url:''
+    }
+
+
+    constructor(public ser: ServiceService) {}
+
+    ngOnInit() {}
+
+    showUploadList = {
+        showPreviewIcon: true,
+        showRemoveIcon: true,
+        hidePreviewIconInNonImage: true
+    };
+
+    fileList = [];
+    previewImage: string | undefined = '';
+    previewVisible = false;
+
+    handlePreview = (file: UploadFile) => {
+        this.previewImage = file.url || file.thumbUrl;
+        this.previewVisible = true;
+    };
+
+    //上传图片触发的回调函数
+    imgChange(e){
+    }
+}

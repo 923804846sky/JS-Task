@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="Task2.css">
+    <link rel="stylesheet" href="../../public/reset.css">
+    <script src="../../public/jquery-3.4.1.js"></script>
+    <title>任务二-页面2</title>
+</head>
+
+<body>
+    <div class="header">
+        <div class="arrow"></div>
+    </div>
+    <div class="main">
+        <!-- 玩家配比 -->
+        <div class="main-1">
+            <strong>玩家配比</strong>
+        </div>
+        <!-- 杀手平民人数 -->
+        <div class="main-2">
+            <div class="main-2-icon">
+                <img src="1.png" alt="">
+                <div>杀手&nbsp;<span id="killer">2</span>&nbsp;人</div>
+            </div>
+            <div class="main-2-icon">
+                <img src="2.png" alt="">
+                <div>平民&nbsp;<span id="civilians">6</span>&nbsp;人</div>
+            </div>
+        </div>
+        <!-- 滑动条加减 -->
+        <div class="main-3">
+            <img src="reduce.png" class="reduce" alt="">
+            <input type="range" id="input_range" min="4" max="18" value="8">
+            <img src="add.png" class="add" alt="">
+        </div>
+        <!-- 玩家数量输入 -->
+        <div class="main-4">
+            <span><strong>请输入玩家数量</strong></span>
+            <input type="text" id="input_text" value="8">
+            <span class="span-color">玩家数量为4-18</span>
+        </div>
+        <!-- 发牌 -->
+        <button class="main-5" id="letGo"><strong>去发牌</strong></button>
+    </div>
+
+    <script src="Task2.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+/* 以下是搜索区域自定义css样式 */
+.dateWrap {
+    border: 1.4px solid #eee;
+    margin-bottom: 10px;
+}
+
+.wrapTop,
+.wrapBottom {
+    display: flex;
+    justify-content: space-between;
+    padding: 24px 20px;
+}
+
+span {
+    font-weight: 700;
+}
+
+button {
+    width: 180px;
+}
+
+.clear {
+    margin-right: 10px;
+}
+
+.clear,
+.search {
+    width: 62px;
+}
+
+.addWrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+    padding: 0 20px;
+    border: 1.4px solid #eee;
+    margin-bottom: 10px;
+
+    .addText {
+        font-weight: 700;
+    }
+
+    .addIcon {
+        width: 50px;
+        height: 20px;
+        font-size: 14px;
+        text-align: center;
+        line-height: 20px;
+        color: #fff;
+        background-color: rgb(92, 184, 92);
+        border-radius: 2px;
+        cursor: pointer;
+    }
+}
+
+.operate{
+    text-align: center;
+}
+

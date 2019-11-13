@@ -1,0 +1,83 @@
+<!-- 搜索区域 -->
+<div class="dateWrap">
+    <div class="wrapTop">
+        <div>
+            <span>修改时间</span>&nbsp;&nbsp;
+            <nz-date-picker [(ngModel)]="dataObj.startAt"></nz-date-picker>
+        </div>
+        <div>
+            <span style="margin-right: 120px;">—</span>
+            <nz-date-picker [(ngModel)]="dataObj.endAt"></nz-date-picker>
+        </div>
+        <div>
+            <span>类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型</span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <nz-select [(ngModel)]="dataObj.type" style="width: 180px;">
+                <nz-option nzValue="" nzLabel="全部"></nz-option>
+                <nz-option nzValue="0" nzLabel="首页banner"></nz-option>
+                <nz-option nzValue="1" nzLabel="找职位banner"></nz-option>
+                <nz-option nzValue="2" nzLabel="找精英banner"></nz-option>
+                <nz-option nzValue="3" nzLabel="行业大图"></nz-option>
+            </nz-select>
+        </div>
+    </div>
+    <div class="wrapBottom">
+        <div>
+            <span>状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态</span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <nz-select [(ngModel)]="dataObj.status" style="width: 180px;">
+                <nz-option nzValue="" nzLabel="全部"></nz-option>
+                <nz-option nzValue="1" nzLabel="草稿"></nz-option>
+                <nz-option nzValue="2" nzLabel="上线"></nz-option>
+            </nz-select>
+        </div>
+        <div class="buttonWrap">
+            <button nz-button nzType="danger" class="clear" (click)='clearData()'>清空</button>
+            <button nz-button nzType="primary" class="search" (click)="searchData()">搜索</button>
+        </div>
+    </div>
+</div>
+
+<div class="addWrap">
+    <span class="addText">Article列表</span>
+    <a [routerLink]="[ '/page/detail']">
+        <div class="addIcon">+新增</div>
+    </a>
+</div>
+
+<!-- 内容区域 -->
+<nz-table [nzData]="responseData" [nzFrontPagination]="false" [nzLoading]="loading" [nzTotal]='totalNum' [nzPageSize]="sizeNum"
+    (nzPageIndexChange)="change($event)">
+    <!-- 第一个不绑定"bbb",页面下方就会出现暂无数据空白，剩下几个是page分页用到的 -->
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>名称</th>
+            <th>类型</th>
+            <th>发布时间</th>
+            <th>修改时间</th>
+            <th>发布者</th>
+            <th>状态</th>
+            <th class="operate">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of responseData">
+            <td>{{ item.id }}</td>
+            <td>{{ item.title }}</td>
+            <td>{{ item.type | type }}</td>
+            <td>{{ item.createAt | date:'yyyy-MM-dd' }}</td>
+            <td>{{ item.updateAt | date:'yyyy-MM-dd' }}</td>
+            <td>{{ item.author }}</td>
+            <td>{{ item.status | status }}</td>
+            <td style="display: flex;align-items: center;justify-content: space-around;">
+                <a nz-popconfirm [nzTitle]="item.status === 2?'确定下线?':'确定上线？'" nzPopconfirmPlacement="top"
+                    (nzOnConfirm)="confirm(item.id,item.status)">{{item.status === 2?'下线':'上线'}}</a>
+                <nz-divider nzType="vertical"></nz-divider>
+                <a (click)="edit(item)">编辑</a>
+                <nz-divider nzType="vertical"></nz-divider>
+                <a nz-popconfirm nzTitle="确定删除?" nzPopconfirmPlacement="top" (nzOnConfirm)="delete(item.id)">删除</a>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+
+

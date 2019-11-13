@@ -1,0 +1,56 @@
+.detailWrap {
+    border: 1.4px solid #eee;
+
+    .detailTop {
+        height: 40px;
+        line-height: 40px;
+        padding-left: 10px;
+        border-bottom: 1.4px solid #eee;
+        font-weight: 700;
+    }
+
+    .detailBottom {
+        padding: 20px 120px;
+
+        .detailList {
+            display: flex;
+            align-items: center;
+            margin-bottom: 24px;
+
+            .clearfix {
+                display: flex;
+            }
+
+            span {
+                white-space: nowrap;
+                margin-right: 18px;
+                font-weight: 700;
+            }
+        }
+    }
+}
+
+i[nz-icon] {
+    font-size: 32px;
+    color: #999;
+}
+
+.ant-upload-text {
+    margin-top: 8px;
+    color: #666;
+}
+
+.button-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .button-left {
+        margin-left: 72px;
+
+        .button1 {
+            background-color: rgb(92, 184, 92);
+            margin-right: 10px;
+        }
+    }
+}

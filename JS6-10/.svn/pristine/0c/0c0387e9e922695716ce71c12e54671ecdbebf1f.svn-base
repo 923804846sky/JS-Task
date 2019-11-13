@@ -1,0 +1,117 @@
+import {
+    Injectable
+} from '@angular/core';
+import {
+    HttpClient,
+    HttpHeaders
+} from '@angular/common/http';
+
+@Injectable({
+    providedIn: 'root'
+})
+
+export class ServiceService {
+    public posturl: string = "/a/login"; //登录url
+    public geturl: string = "/a/article/search" //获取数据url
+    public uploadurl: string = "/a/u/article" //上传数据url
+    public putStatusUrl: string = "/a/u/article/status" //修改上下线url
+    public editUrl: string = "/a/article" //编辑获得单个数据
+    public editAllUrl: string = "/a/u/article" //编辑所有数据上传
+    public deleteUrl: string = "/a/u/article" //删除数据的url
+
+    public requestHeader = {
+        headers: new HttpHeaders({
+            "Content-Type": "application/x-www-form-urlencoded"
+        })
+    }
+
+    constructor(private http: HttpClient) {} //小括号内是初始化HttpClient模块,之后http就是代表HttpClient
+
+    // -------------------------------获取数据的GET方法-------------------------------
+    getData(cs ? ) {
+        return this.http.get(
+            this.geturl, {
+                params: cs //第一个params是固定的，第二个cs是形参
+            }
+        )
+    }
+
+    // -------------------------------登录接口的POST方法-------------------------------
+    postData(data) {
+        const params = typeof (data) === 'object' && String(data) !== '[object File]' ? this.paramFormat(data) : data;
+        return this.http.post(
+            this.posturl, params, this.requestHeader
+        )
+    }
+
+    // -------------------------------新增数据的POST方法-------------------------------
+    upload(data) {
+        const params = typeof (data) === 'object' && String(data) !== '[object File]' ? this.paramFormat(data) : data;
+        const requestHeader = {
+            headers: new HttpHeaders({
+                "Content-Type": "application/x-www-form-urlencoded"
+            })
+        }
+        return this.http.post(
+            this.uploadurl, params, requestHeader
+        )
+    }
+
+    // -------------------------------修改上下线的PUT方法-------------------------------
+    putStatusData(data) {
+        const params = typeof (data) === 'object' && String(data) !== '[object File]' ? this.paramFormat(data) : data;
+        return this.http.put(
+            this.putStatusUrl, params, this.requestHeader
+        )
+    }
+
+    // -------------------------------编辑获取单个数据的GET方法-------------------------------
+    editData(cs) {
+        return this.http.get(
+            `${this.editUrl}/${cs}`
+        )
+    }
+    // -------------------------------编辑后上传数据的PUT方法-------------------------------
+    putData(data) {
+        const params = typeof (data) === 'object' && String(data) !== '[object File]' ? this.paramFormat(data) : data;
+        return this.http.put(
+            `${this.editAllUrl}/${data.id}`, params, this.requestHeader
+        )
+    }
+
+    // 以下方法的作用是把格式进行你序列化，post方法需要用到,和上面的paramFormat(data)相呼应。
+    // 作用是把对象格式转换字符串格式"key=value&key=value&key=value"
+    paramFormat(data: any) {
+        let paramStr = '',
+            name, value, subName, innerObj;
+        let that = this;
+        for (name in data) {
+            value = data[name];
+            if (value instanceof Array) {
+                for (let i of value) {
+                    subName = name;
+                    innerObj = {};
+                    innerObj[subName] = i;
+                    paramStr += this.paramFormat(innerObj) + '&';
+                }
+            } else if (value instanceof Object) {
+                Object.keys(value).forEach(function (key) {
+                    subName = name + '[' + key + ']';
+                    innerObj = {};
+                    innerObj[subName] = value[key];
+                    paramStr += that.paramFormat(innerObj) + '&';
+                });
+            } else if (value !== undefined && value !== null) {
+                paramStr += encodeURIComponent(name) + '=' +
+                    encodeURIComponent(value) + '&';
+            }
+        }
+        return paramStr.length ? paramStr.substr(0, paramStr.length - 1) : paramStr;
+    }
+
+    deleteData(params) {
+        return this.http.delete(
+            `${this.deleteUrl}/${params}`
+        )
+    }
+}

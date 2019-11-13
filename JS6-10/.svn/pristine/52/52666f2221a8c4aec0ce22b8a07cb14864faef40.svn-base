@@ -1,0 +1,90 @@
+import {
+    Component,
+    OnInit
+} from '@angular/core';
+import {
+    UploadFile
+} from 'ng-zorro-antd';
+
+import {
+    ServiceService
+} from '../../../services/service.service'
+import {
+    Router
+} from '@angular/router';
+
+
+@Component({
+    selector: 'app-detail',
+    templateUrl: './detail.component.html',
+    styleUrls: ['./detail.component.scss']
+})
+export class DetailComponent implements OnInit {
+
+    public imgObj: any = {
+        title: '',
+        type: '',
+        status: '',
+        img: [],
+        content: '',
+        url: ''
+    }
+
+    constructor(public ser: ServiceService, public rou: Router) {}
+
+    ngOnInit() {}
+
+    //下面一堆看不懂的是使用上传图片ui组件复制过来的，不知道有什么用
+    showUploadList = {
+        showPreviewIcon: true,
+        showRemoveIcon: true,
+        hidePreviewIconInNonImage: true
+    };
+
+    fileList = [];
+    previewImage: string | undefined = '';
+    previewVisible = false;
+
+    handlePreview = (file: UploadFile) => {
+        this.previewImage = file.url || file.thumbUrl;
+        this.previewVisible = true;
+    };
+
+    // 上传图片触发的回调函数
+    change(e) {
+        console.log(e)
+        if (e.type == "success") {
+            this.imgObj.img[0] = e.file.response.data.url
+        }
+        console.log(this.imgObj)
+    }
+
+    //新增数据状态为"上线"的方法
+    online() {
+        let params = JSON.parse(JSON.stringify(this.imgObj)) //深拷贝。不加这一行代码img地址会有问题
+        console.log(params)
+        params.img = this.imgObj.img[0];
+        params.status = 2;
+        console.log(params)
+        this.ser.upload(params).subscribe((res: any) => {
+            console.log(res);
+            if (res.code == 0) {
+                this.rou.navigate(['/page/article'])
+            }
+        })
+    }
+
+    //新增数据状态为"草稿"的方法
+    draft() {
+        let params = JSON.parse(JSON.stringify(this.imgObj)) //深拷贝。不加这一行代码img地址会有问题
+        console.log(params)
+        params.img = this.imgObj.img[0];
+        params.status = 1;
+        this.ser.upload(params).subscribe((res: any) => {
+            console.log(res);
+            if (res.code == 0) {
+                this.rou.navigate(['/page/article'])
+            }
+        })
+    }
+}

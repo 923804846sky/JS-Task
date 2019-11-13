@@ -1,0 +1,49 @@
+<div class="detailWrap">
+    <div class="detailTop">新增Article</div>
+    <div class="detailBottom">
+        <div class="detailList">
+            <span>标题名称</span>
+            <input nz-input [(ngModel)]="title" />
+        </div>
+        <div class="detailList">
+            <span>类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型</span>
+            <nz-select [(ngModel)]="type" nzAllowClear nzPlaceHolder="请选择" style="width: 180px;color: #bfbfbf;">
+                <nz-option nzValue="0" nzLabel="首页banner"></nz-option>
+                <nz-option nzValue="1" nzLabel="找职位banner"></nz-option>
+                <nz-option nzValue="2" nzLabel="找精英banner"></nz-option>
+                <nz-option nzValue="3" nzLabel="行业大图"></nz-option>
+            </nz-select>
+        </div>
+        <div class="detailList">
+            <span>说&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</span>
+            <input nz-input [(ngModel)]="content" />
+        </div>
+        <div class="detailList">
+            <span>跳转链接</span>
+            <input nz-input [(ngModel)]="url" />
+        </div>
+        <div class="detailList">
+            <span>配&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;图</span>
+            <div class="clearfix">
+                <nz-upload nzAction="/a/u/img/task" nzListType="picture-card" [(nzFileList)]="fileList"
+                    [nzPreview]="handlePreview" (nzChange)='imgChange($event)'>
+                    <i nz-icon nzType="plus"></i>
+                    <div class="ant-upload-text">Upload</div>
+                </nz-upload>
+                <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null"
+                    (nzOnCancel)="previewVisible = false">
+                    <ng-template #modalContent>
+                        <img [src]="previewImage" [ngStyle]="{ width: '100%' }" />
+                    </ng-template>
+                </nz-modal>
+            </div>
+        </div>
+        <div class="button-wrap">
+            <div class="button-left">
+                <button nz-button nzType="primary" class="button1">立即上线</button>
+                <button nz-button nzType="primary" class="button1">存为草稿</button>
+            </div>
+            <button nz-button nzType="danger" class="button2">取消</button>
+        </div>
+    </div>
+</div>

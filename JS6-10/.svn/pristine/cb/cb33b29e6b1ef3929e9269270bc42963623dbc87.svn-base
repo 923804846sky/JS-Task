@@ -1,0 +1,59 @@
+<div class="detailWrap">
+    <div class="detailTop">新增Article</div>
+    <div class="detailBottom">
+        <div class="detailList">
+            <span>标题名称</span>
+            <input nz-input [(ngModel)]="imgObj.title" />
+        </div>
+        <div class="detailList">
+            <span>类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型</span>
+            <nz-select [(ngModel)]="imgObj.type"  style="width: 180px;">
+                <nz-option nzValue="0" nzLabel="首页banner"></nz-option>
+                <nz-option nzValue="1" nzLabel="找职位banner"></nz-option>
+                <nz-option nzValue="2" nzLabel="找精英banner"></nz-option>
+                <nz-option nzValue="3" nzLabel="行业大图"></nz-option>
+            </nz-select>
+            <nz-select [(ngModel)]="imgObj.industry" 
+                style="width: 180px;margin-left: 28px" *ngIf="imgObj.type == 3">
+                <nz-option nzValue="0" nzLabel="移动互联网"></nz-option>
+                <nz-option nzValue="1" nzLabel="电子商务"></nz-option>
+                <nz-option nzValue="2" nzLabel="企业服务"></nz-option>
+                <nz-option nzValue="3" nzLabel="O2O"></nz-option>
+                <nz-option nzValue="4" nzLabel="教育"></nz-option>
+                <nz-option nzValue="5" nzLabel="金融"></nz-option>
+                <nz-option nzValue="6" nzLabel="游戏"></nz-option>
+            </nz-select>
+        </div>
+        <div class="detailList">
+            <span>说&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</span>
+            <input nz-input [(ngModel)]="imgObj.content" />
+        </div>
+        <div class="detailList">
+            <span>跳转链接</span>
+            <input nz-input [(ngModel)]="imgObj.url" />
+        </div>
+        <div class="detailList">
+            <span>配&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;图</span>
+            <div class="clearfix">
+                <nz-upload nzAction="/a/u/img/task" nzListType="picture-card" [(nzFileList)]="fileList"
+                    [nzPreview]="handlePreview" (nzChange)='change($event)'>
+                    <i nz-icon nzType="plus"></i>
+                    <div class="ant-upload-text">Upload</div>
+                </nz-upload>
+                <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null"
+                    (nzOnCancel)="previewVisible = false">
+                    <ng-template #modalContent>
+                        <img [src]="previewImage" [ngStyle]="{ width: '100%' }" />
+                    </ng-template>
+                </nz-modal>
+            </div>
+        </div>
+        <div class="button-wrap">
+            <div class="button-left">
+                <button nz-button nzType="primary" class="button1" (click)="online()">立即上线</button>
+                <button nz-button nzType="primary" class="button1" (click)="draft()">存为草稿</button>
+            </div>
+            <a [routerLink]="[ '/page/article']"><button nz-button nzType="danger">取消</button></a>
+        </div>
+    </div>
+</div>

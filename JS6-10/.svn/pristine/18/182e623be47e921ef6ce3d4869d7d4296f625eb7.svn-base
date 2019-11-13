@@ -1,0 +1,50 @@
+import {
+    Component,
+    OnInit
+} from '@angular/core';
+import {
+    ServiceService
+} from '../../services/service.service';
+import {
+    Router
+} from '@angular/router';
+
+@Component({
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss']
+})
+export class LoginComponent implements OnInit {
+
+    // 以下aaa对象是要在post请求中用到的
+    public aaa: any = {
+        name: '',
+        pwd: ''
+    }
+
+    // 引入了service和router模块，要在下方构造函数内初始化才能使用
+    constructor(
+        public ser: ServiceService,
+        public rou: Router
+    ) {}
+
+    ngOnInit() {}
+
+    login() {
+        //以下是css样式，可以忽略
+        var bgc = document.getElementById("footer");
+        bgc.style.backgroundColor = "black";
+        bgc.style.color = "white";
+
+        //以下才是正文
+        this.ser.postData(this.aaa).subscribe((res: any) => {
+            console.log(res)
+            if (res.code == 0) {
+                window.sessionStorage.setItem('auth_token', this.aaa.name);
+                this.rou.navigate(['/page']);
+            } else {
+                document.getElementById("addText").innerHTML = res.message;
+            }
+        })
+    }
+}

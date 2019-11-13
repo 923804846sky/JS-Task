@@ -1,0 +1,29 @@
+/* 以下是搜索区域自定义css样式 */
+.dateWrap {
+    border: 1.2px solid #eee;
+    margin-bottom: 24px;
+    background-color: #fff;
+}
+
+.wrapTop,
+.wrapBottom {
+    display: flex;
+    justify-content: space-between;
+    padding: 24px 20px;
+}
+
+span {
+    font-weight: 700;
+}
+
+button {
+    width: 180px;
+}
+
+.clear{
+  margin-right: 10px;
+}
+.clear,.search{
+  width: 62px;
+}
+

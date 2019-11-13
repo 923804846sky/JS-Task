@@ -1,0 +1,126 @@
+import {
+    Component,
+    OnInit
+} from '@angular/core';
+import {
+    ServiceService
+} from '../../../services/service.service';
+import {
+    ActivatedRoute,
+    Router
+} from '@angular/router';
+
+@Component({
+    selector: 'app-article',
+    templateUrl: './article.component.html',
+    styleUrls: ['./article.component.scss']
+})
+
+export class ArticleComponent implements OnInit {
+    public bbb: any = []; //请求到数据后将需要的数据传递给了这个数组
+    public loading: boolean; //加载数据时显示一个加载框，装饰效果
+    public totalNum: number; //page分页
+    public sizeNum: number; //page分页
+    public startDate: any; //日期选择框双向数据绑定
+    public endDate: any; //日期选择框双向数据绑定
+    public type: any; //搜索的双向数据绑定
+    public status: any; //搜索的双向数据绑定
+    public DataObj: any; //请求数据的对象
+    public PageObj: any; //请求分页的对象
+    public savePage:any;
+
+    constructor(
+        public ser: ServiceService,
+        public rou: Router,
+        public actRouter: ActivatedRoute
+    ) {}
+
+    // 页面加载时就会执行这里面的代码以及函数
+    ngOnInit() {
+        this.actRouter.queryParamMap.subscribe((result: any) => {
+            console.log(result)
+            this.savePage = result.params
+            this.getTable(this.savePage)
+        })
+    }
+
+    //   --------------------------请求数据的方法---------------------------
+    getTable(params ? ) {
+        this.loading = true;
+        this.ser.getData(params).subscribe((res: any) => {
+            console.log(res);
+            this.bbb = res.data.articleList;
+            this.totalNum = res.data.total; //page分页
+            this.sizeNum = res.data.size; //page分页
+            this.loading = false;
+        })
+    }
+
+    //   --------------------------页码改变的回调方法---------------------------
+    change(e) {
+        this.PageObj = {
+            page: e
+        }
+        console.log(e)
+
+        let pageChange = Object.assign(this.PageObj, this.DataObj)
+        console.log(pageChange)
+
+        this.rou.navigate(['/page/article'], {
+            queryParams: pageChange
+        })
+    }
+
+    //   --------------------------查找数据的方法---------------------------
+    searchData() {
+        // 以下时进行搜索的判断，防止某个值为undefined导致搜索报错
+        let start = this.startDate ? new Date(this.startDate).getTime() : '';
+        let end = this.endDate ? new Date(this.endDate).getTime() + 86399999 : ''; // + 86399999后可以搜索同一天的数据
+        this.type == undefined ? '' : this.type;
+        this.status == undefined ? '' : this.status;
+
+        this.DataObj = {
+            type: this.type,
+            status: this.status,
+            startAt: start,
+            endAt: end
+        }
+
+        this.rou.navigate(['/page/article'], {
+            queryParams: this.DataObj
+        })
+    }
+
+    //   --------------------------清空数据的方法---------------------------
+    clearData() {
+        this.DataObj = {
+            type: "",
+            status: "",
+            startAt: "",
+            endAt: ""
+        }
+
+        this.startDate = ''; //清空时间，因为上面清空的只是转换之后的时间
+        this.endDate = '';
+        this.type = '';
+        this.status = '';
+        this.rou.navigate(['/page/article'], {
+            queryParams: this.DataObj
+        })
+    }
+    //   --------------------------修改上下线的方法---------------------------
+    confirm(id, status) {
+        console.log(id, status)
+        status = status == 1 ? 2 : 1;
+        this.ser.putStatusData({
+            id: id,
+            status: status
+        }).subscribe((res: any) => {
+            console.log(res)
+            if (res.code == 0) {
+                console.log(this.savePage)
+                this.getTable(this.savePage)
+            }
+        })
+    }
+}

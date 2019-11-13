@@ -1,0 +1,9 @@
+<body>
+    <div class="main">
+        <div class="top">后台登录</div>
+        <input type="text" id="user" placeholder="用户名" [(ngModel)]="account.name">
+        <input type="password" id="pwd" placeholder="密码" [(ngModel)]="account.pwd">
+        <div id="addText"></div>
+        <button id="footer" (click)="login()">登录</button>
+    </div>
+</body>

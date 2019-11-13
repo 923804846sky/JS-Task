@@ -1,0 +1,122 @@
+body {
+    background-color: #f0f0f0;
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 50px;
+        padding: 0 10px;
+        color: #fff;
+        border-bottom: 0.8px solid #74d4eb;
+        background-color: #29bde0;
+
+        .arrows {
+            width: 12px;
+            height: 20px;
+        }
+
+        .cross {
+            width: 18px;
+            height: 18px;
+        }
+    }
+
+    .main {
+        margin: 20px 10px;
+        background-color: #fff;
+        border: 0.8px solid #cacaca;
+
+        .main-top {
+            position: relative;
+            border-bottom: 0.8px solid #cacaca;
+            text-align: center;
+            line-height: 45px;
+            color: #29bde0;
+            cursor: pointer;
+
+            .arrow {
+                position: absolute;
+                right: 15px;
+                top: 15px;
+                width: 12px;
+                height: 12px;
+                border-top: 2px solid;
+                border-left: 2px solid;
+                transform: rotate(-135deg);
+            }
+        }
+
+        .main-bottom {
+            margin-left: 30px;
+            border-left: 0.8px solid #cacaca;
+            padding: 10px 0;
+
+            .addText {
+                font-size: 14px;
+                font-weight: 700;
+                color: #24a7c6;
+                text-align: center;
+            }
+
+            .square {
+                position: relative;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 10px 0;
+
+                img {
+                    position: absolute;
+                    width: 30px;
+                    left: -15px;
+                }
+
+                .triangle {
+                    border-top: 8px solid transparent;
+                    border-bottom: 8px solid transparent;
+                    border-right: 12px solid #24a7c6;
+                }
+
+                .text {
+                    line-height: 40px;
+                    width: 80%;
+                    text-align: center;
+                    color: #fff;
+                    background-color: #24a7c6;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+    .footer {
+        position: fixed;
+        bottom: 0px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-color: #29bde0;
+        height: 60px;
+        padding: 0 10px;
+        width: 100%;
+
+        .gameOver,
+        .judgeRecord {
+            line-height: 40px;
+            text-align: center;
+            color: #fff;
+            border-radius: 8px;
+            width: calc(50% - 40px);
+            cursor: pointer;
+        }
+
+        .gameOver {
+            background-color: red;
+        }
+
+        .judgeRecord {
+            background-color: orange;
+        }
+    }
+}
